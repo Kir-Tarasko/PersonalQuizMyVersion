@@ -9,18 +9,18 @@ import UIKit
 
 class QuestionViewController: UIViewController {
 
-    @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet var questionLabel: UILabel!
     
-    @IBOutlet weak var singleStackView: UIStackView!
+    @IBOutlet var singleStackView: UIStackView!
     @IBOutlet var singleButtons: [UIButton]!
     
-    @IBOutlet weak var multipleStackView: UIStackView!
+    @IBOutlet var multipleStackView: UIStackView!
     @IBOutlet var multipleLabel: [UILabel]!
     @IBOutlet var multipleSwitch: [UISwitch]!
     
-    @IBOutlet weak var rangedStackView: UIStackView!
+    @IBOutlet var rangedStackView: UIStackView!
     @IBOutlet var rangedLabels: [UILabel]!
-    @IBOutlet weak var rangedSlider: UISlider! {
+    @IBOutlet var rangedSlider: UISlider! {
         didSet {
             let answerCount = Float(currentAnswers.count - 1)
             rangedSlider.maximumValue = answerCount
@@ -28,21 +28,25 @@ class QuestionViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var questionProgressView: UIProgressView!
+    @IBOutlet var questionProgressView: UIProgressView!
     
-    private let questions = Question.getQuestion()
-    private var questionIndex = 0
+    private let questions = Question.getQuestions()
     private var answersChosen: [Answer] = []
     private var currentAnswers: [Answer] {
         questions[questionIndex].answers
     }
     
+    private var questionIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-      
-        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let resultVC = segue.destination as? ResultViewController else { return }
+        resultVC.responces = answersChosen
+                
     }
     
     @IBAction func singleAnswerButtonPressed(_ sender: UIButton) {
@@ -67,7 +71,6 @@ class QuestionViewController: UIViewController {
     @IBAction func rangedAnswerButtonPressed() {
         let index = lrintf(rangedSlider.value)
         answersChosen.append(currentAnswers[index])
-        
         nextQuestion()
     }
   

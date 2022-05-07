@@ -10,7 +10,7 @@ struct Question {
     let type: ResponseType
     let answers: [Answer]
     
-    static func getQuestion() -> [Question] {
+    static func getQuestions() -> [Question] {
         [
             Question(
                 title: "Какую пищу вы предпочитаете?",
@@ -46,15 +46,15 @@ struct Question {
     }
 }
 
+struct Answer {
+    let title: String
+    let type: AnimalType
+}
+
 enum ResponseType {
     case single
     case multiple
     case ranged
-}
-
-struct Answer {
-    let title: String
-    let type: AnimalType
 }
 
 enum AnimalType: Character {
@@ -66,13 +66,13 @@ enum AnimalType: Character {
     var definition: String {
         switch self {
         case .dog:
-            return "You - dog"
+            return "Вам нравится быть с друзьями. Вы окружаете себя людьми, которые вам нравяться и всегда готовы помочь."
         case .cat:
-            return "You - cat"
+            return "Вы себе на уме. Любите гулять сами по себе. Вы цените одиночество."
         case .rabbit:
-            return "You - rabbit"
+            return "Вам нравится все мягкое. Вы здоровы и полны энергии."
         case .turtle:
-            return "You - turtle"
+            return "Ваша сила - в мудрости. Медленный и вдумчивый выигрывает на больших дистанциях."
         }
     }
 }
